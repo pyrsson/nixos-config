@@ -9,9 +9,9 @@
     ];
 
   boot.initrd.availableKernelModules = [ "nvme" ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules = [ "nvidia" ];
   boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
+  boot.extraModulePackages = [ config.boot.kernelModules.nvidia_x11 ];
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/ae67cd9f-bce3-448d-bb27-e9f75e32a2f0";
