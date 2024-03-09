@@ -1,10 +1,5 @@
-{
-  inputs,
-  outputs,
-  lib,
-  config,
-  pkgs,
-  ...
+{ pkgs
+, ...
 }: {
   # You can import other home-manager modules here
   imports = [
@@ -15,8 +10,9 @@
     # inputs.nix-colors.homeManagerModules.default
 
     # You can also split up your configuration and import pieces of it here:
-    # ./nvim.nix
-    ./neovim
+    ./neovim.nix
+    ./alacritty.nix
+    ./tmux.nix
   ];
 
   nixpkgs = {
@@ -29,10 +25,19 @@
     };
   };
 
-  # TODO: Set your username
   home = {
     username = "simon";
     homeDirectory = "/home/simon";
+    packages = with pkgs; [
+      nerdfonts
+      gcc
+      jq
+      yq
+      rustup
+      oh-my-zsh
+      go
+      fd
+    ];
   };
 
   # Enable home-manager and git
@@ -42,21 +47,37 @@
     userName = "Simon Persson";
     userEmail = "55557230+pyrsson@users.noreply.github.com";
   };
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-  };
+
   programs.zsh = {
     enable = true;
+    syntaxHighlighting = {
+      enable = true;
+      highlighters = [
+        "brackets"
+      ];
+    };
+    cdpath = [
+      "~/github"
+      "~/work"
+    ];
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" ];
+      plugins = [
+        "git"
+        "fzf"
+        "golang"
+      ];
+      custom = "$HOME/github/dotfiles/ohmyzsh";
+      theme = "pyrsson";
     };
   };
+  programs.fzf.enable = true;
+  programs.bat.enable = true;
 
+  fonts.fontconfig.enable = true;
+
+  # home.file.".zshrc".source = ./dotfiles/.zshrc;
+  # home.file.".tmux.conf".source = ./dotfiles/.tmux.conf;
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
-
-  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  home.stateVersion = "23.05";
 }

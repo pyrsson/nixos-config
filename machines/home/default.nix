@@ -1,16 +1,35 @@
-{ config, lib, pkgs, ... }:
+{ config, ... }:
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
 
       ../common
       ../common/optional/gnome.nix
+      ../common/optional/steam.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # boot.loader.systemd-boot.enable = true;
+  # boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    efi = {
+      canTouchEfiVariables = true;
+      efiSysMountPoint = "/boot/efi";
+    };
+    grub = {
+      efiSupport = true;
+      device = "nodev";
+      useOSProber = true;
+      extraEntries = ''
+        menuentry "Nobara" {
+          search --set=nobara --fs-uuid ae67cd9f-bce3-448d-bb27-e9f75e32a2f0
+          configfile "($nobara)/boot/grub/grub.cfg"
+        }
+      '';
+    };
+  };
 
   networking.hostName = "sidearm";
 
@@ -33,13 +52,13 @@
     #media-session.enable = true;
   };
 
-  hardware.opengl ={
+  hardware.opengl = {
     enable = true;
     driSupport = true;
     driSupport32Bit = true;
   };
 
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.nvidia = {
     modesetting.enable = true;
