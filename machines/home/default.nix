@@ -21,12 +21,12 @@
       efiSupport = true;
       device = "nodev";
       useOSProber = true;
-      extraEntries = ''
-        menuentry "Nobara" {
-          search --set=nobara --fs-uuid ae67cd9f-bce3-448d-bb27-e9f75e32a2f0
-          configfile "($nobara)/boot/grub/grub.cfg"
-        }
-      '';
+      # extraEntries = ''
+      #   menuentry "Nobara" {
+      #     search --set=nobara --fs-uuid ae67cd9f-bce3-448d-bb27-e9f75e32a2f0
+      #     configfile "($nobara)/boot/grub/grub.cfg"
+      #   }
+      # '';
     };
   };
 

@@ -32,15 +32,15 @@
     pkgsFor = lib.genAttrs systems (system: import nixpkgs {
       inherit system;
       config.allowUnfree = true;
+      overlays = [
+        (final: _prev: {
+          unstable = import inputs.nixpkgs-unstable {
+            system = "x86_64-linux";
+          };
+        })
+      ];
     });
   in {
-    overlays = {
-      unstable-packages = final: _prev: {
-        unstable = import inputs.nixpkgs-unstable {
-          system = "x86_64-linux";
-        };
-      };
-    };
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
@@ -58,12 +58,12 @@
     # Standalone home-manager configuration entrypoint
     # Available through 'home-manager --flake .#your-username@your-hostname'
     homeConfigurations = {
-      "simon@nix-vm" = home-manager.lib.homeManagerConfiguration {
+      "simon@nix-vm" = lib.homeManagerConfiguration {
         pkgs = pkgsFor.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [./home/work.nix];
       };
-      "simon@sidearm" = home-manager.lib.homeManagerConfiguration {
+      "simon@sidearm" = lib.homeManagerConfiguration {
         pkgs = pkgsFor.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [./home/home.nix];

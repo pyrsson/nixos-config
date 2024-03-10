@@ -30,8 +30,7 @@ in
   };
 
   xdg.configFile = builtins.listToAttrs (map
-    (pkg:
- {
+    (pkg: {
     name = "autostart/" + pkg.pname + ".desktop";
     value =
       if pkg ? desktopItem then {
@@ -44,7 +43,8 @@ in
         # matching .desktop name in /share/apaplications
         source = (pkg + "/share/applications/" + pkg.pname + ".desktop");
       };
-  })
-  autostartPrograms);
+    })
+    autostartPrograms
+  );
   home.stateVersion = "23.11";
 }

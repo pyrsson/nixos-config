@@ -10,8 +10,8 @@
     # inputs.nix-colors.homeManagerModules.default
 
     # You can also split up your configuration and import pieces of it here:
-    ./neovim.nix
     ./alacritty.nix
+    ./nvim
     ./tmux
   ];
 

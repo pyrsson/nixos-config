@@ -1,14 +1,8 @@
-{outputs, pkgs, ...}:
+{pkgs, ...}:
 {
-  # need 0.13 for toml config
-  nixpkgs = {
-    overlays = [
-      outputs.overlays.unstable-packages
-    ];
-  };
-
   programs.alacritty = {
     enable = true;
+# need 0.13 for toml config
     package = pkgs.unstable.alacritty;
   #   settings = {
   #     import = [
@@ -33,7 +27,7 @@
   };
 
   # until toml settings are fixed:
-  home.file.".config/alacritty/alacritty.toml" = {
+  xdg.configFile."alacritty/alacritty.toml" = {
     text = ''
       import = [
         "~/.local/share/nvim/lazy/tokyonight.nvim/extras/alacritty/tokyonight_moon.toml"
