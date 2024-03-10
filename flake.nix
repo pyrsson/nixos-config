@@ -26,6 +26,13 @@
     ...
   } @ inputs: let
     inherit (self) outputs;
+    lib = nixpkgs.lib // home-manager.lib;
+    systems = [ "x86_64-linux" "aarch64-linux" ];
+    # forEachSystem = f: lib.genAttrs systems (system: f pkgsFor.${system});
+    pkgsFor = lib.genAttrs systems (system: import nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+    });
   in {
     overlays = {
       unstable-packages = final: _prev: {
@@ -38,11 +45,11 @@
     # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
       # FIXME replace with your hostname
-      nix-vm = nixpkgs.lib.nixosSystem {
+      nix-vm = lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [./machines/vm];
       };
-      sidearm = nixpkgs.lib.nixosSystem {
+      sidearm = lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [./machines/home];
       };
@@ -52,12 +59,12 @@
     # Available through 'home-manager --flake .#your-username@your-hostname'
     homeConfigurations = {
       "simon@nix-vm" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+        pkgs = pkgsFor.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [./home/work.nix];
       };
       "simon@sidearm" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+        pkgs = pkgsFor.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [./home/home.nix];
       };

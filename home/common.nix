@@ -37,6 +37,7 @@
       oh-my-zsh
       go
       fd
+      spotify
     ];
   };
 
@@ -48,15 +49,46 @@
     userEmail = "55557230+pyrsson@users.noreply.github.com";
   };
 
+  programs.bash.enable = true;
   programs.zsh = {
     enable = true;
+    sessionVariables = {
+      FZF_DEFAULT_OPTS="--color dark,prompt:blue,hl+:cyan,hl:cyan,bg+:gray,gutter:-1,fg+:blue:bold,pointer:cyan,info:blue,border:gray";
+    };
     syntaxHighlighting = {
       enable = true;
       highlighters = [
         "brackets"
       ];
+      styles = {
+        comment = "fg=white,faint";
+        single-quoted-argument = "fg=green";
+        single-quoted-argument-unclosed = "fg=green";
+        double-quoted-argument = "fg=green";
+        double-quoted-argument-unclosed = "fg=green";
+        command = "fg=cyan";
+        builtin = "fg=cyan";
+        alias = "fg=cyan";
+        path = "fg=blue";
+      };
     };
+    initExtraFirst = ''
+      DISABLE_MAGIC_FUNCTIONS=true
+    '';
+    initExtra = ''
+      # bash word-style
+      autoload -Uz backward-kill-word-match
+
+      bindkey '^W' backward-kill-space-word
+      zle -N backward-kill-space-word backward-kill-word-match
+      zstyle :zle:backward-kill-space-word word-style space
+
+      bindkey '^[^H' backward-kill-bash-word
+      zle -N backward-kill-bash-word backward-kill-word-match
+      zstyle :zle:backward-kill-bash-word word-style bash
+    '';
     cdpath = [
+      "~"
       "~/github"
       "~/work"
     ];

@@ -7,7 +7,6 @@
 
       ../common
       ../common/optional/gnome.nix
-      ../common/optional/steam.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
