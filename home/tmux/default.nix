@@ -1,6 +1,6 @@
 {pkgs, ...}:
 let
-  tmuxattach = pkgs.writeShellScriptBin "ta" (builtins.readFile ./dotfiles/functions/ta);
+  tmuxattach = pkgs.writeShellScriptBin "ta" (builtins.readFile ./ta);
 in 
 {
   programs.tmux = {
@@ -11,7 +11,7 @@ in
     ];
     extraConfig = 
       ''
-      ${ builtins.readFile ./dotfiles/tmux.conf }
+      ${ builtins.readFile ./tmux.conf }
       run-shell ${pkgs.tmuxPlugins.prefix-highlight}/share/tmux-plugins/prefix-highlight/prefix_highlight.tmux
       '';
   };
