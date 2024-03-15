@@ -31,12 +31,12 @@
       options = [ "subvol=@games" ];
     };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/8af1b0c2-6761-4738-95ee-28625068fb29";
-      fsType = "ext4";
-    };
+  # fileSystems."/boot" =
+  #   { device = "/dev/disk/by-uuid/8af1b0c2-6761-4738-95ee-28625068fb29";
+  #     fsType = "ext4";
+  #   };
 
-  fileSystems."/boot/efi" =
+  fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/7CD2-E7F8";
       fsType = "vfat";
     };

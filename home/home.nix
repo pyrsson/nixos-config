@@ -15,6 +15,7 @@ in
     ./common.nix
     ./alacritty.nix
     ./steam.nix
+    ./lutris.nix
   ];
 
   home.packages = with pkgs; [
@@ -23,11 +24,11 @@ in
     })
   ];
 
-  xdg.desktopEntries.discord = {
-    name = "Discord";
-    exec = "discord --disable-gpu";
-    icon = "${pkgs.discord}/opt/Discord/discord.png";
-  };
+  # xdg.desktopEntries.discord = {
+  #   name = "Discord";
+  #   exec = "discord --disable-gpu";
+  #   icon = "${pkgs.discord}/opt/Discord/discord.png";
+  # };
 
   xdg.configFile = builtins.listToAttrs (map
     (pkg: {

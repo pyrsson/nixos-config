@@ -28,15 +28,27 @@ return {
       },
     },
   },
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    opts = {
+      window = {
+        width = 30,
+      },
+    },
+  },
   -- disable mason
-  -- {
-  --   "williamboman/mason.nvim",
-  --   enabled = false,
-  -- },
-  -- {
-  --   "williamboman/mason-lspconfig.nvim",
-  --   enabled = false,
-  -- },
+  {
+    "williamboman/mason.nvim",
+    enabled = false,
+  },
+  {
+    "williamboman/mason-lspconfig.nvim",
+    enabled = false,
+  },
+  {
+    "jay-babu/mason-nvim-dap.nvim",
+    enabled = false,
+  },
   {
     "stevearc/conform.nvim",
     opts = {

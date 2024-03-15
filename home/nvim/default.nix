@@ -15,17 +15,25 @@ in
     extraPackages = with pkgs; [
       lua-language-server
       rust-analyzer-unwrapped
+      taplo
       typescript
       gopls
+      gofumpt
+      delve
+      dockerfile-language-server-nodejs
+      docker-compose-language-service
+      yaml-language-server
+      hadolint
       nil
       xclip
       wl-clipboard
       deno
       nodePackages.bash-language-server
+      nodePackages.vscode-json-languageserver-bin
       shfmt
       shellcheck
     ];
-    plugins = with pkgs.vimPlugins; [
+    plugins = [
       treesitterWithGrammars
     ];
   };

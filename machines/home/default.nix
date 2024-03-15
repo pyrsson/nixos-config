@@ -10,30 +10,27 @@
     ];
 
   # Use the systemd-boot EFI boot loader.
-  # boot.loader.systemd-boot.enable = true;
-  # boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader = {
-    efi = {
-      canTouchEfiVariables = true;
-      efiSysMountPoint = "/boot/efi";
-    };
-    grub = {
-      efiSupport = true;
-      device = "nodev";
-      useOSProber = true;
-      # extraEntries = ''
-      #   menuentry "Nobara" {
-      #     search --set=nobara --fs-uuid ae67cd9f-bce3-448d-bb27-e9f75e32a2f0
-      #     configfile "($nobara)/boot/grub/grub.cfg"
-      #   }
-      # '';
-    };
-  };
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  # boot.loader = {
+  #   efi = {
+  #     canTouchEfiVariables = true;
+  #     efiSysMountPoint = "/boot/efi";
+  #   };
+  #   grub = {
+  #     efiSupport = true;
+  #     device = "nodev";
+  #     useOSProber = true;
+  #   };
+  # };
 
   networking.hostName = "sidearm";
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+  services.nscd = {
+    enableNsncd = false;
+  };
 
   # Enable sound with pipewire.
   sound.enable = true;
