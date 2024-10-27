@@ -1,6 +1,5 @@
-{ pkgs
-, ...
-}: {
+{ pkgs, inputs, ... }:
+{
   # You can import other home-manager modules here
   imports = [
     # If you want to use modules your own flake exports (from modules/home-manager):
@@ -53,13 +52,11 @@
   programs.zsh = {
     enable = true;
     sessionVariables = {
-      FZF_DEFAULT_OPTS="--color dark,prompt:blue,hl+:cyan,hl:cyan,bg+:gray,gutter:-1,fg+:blue:bold,pointer:cyan,info:blue,border:gray";
+      FZF_DEFAULT_OPTS = "--color dark,prompt:blue,hl+:cyan,hl:cyan,bg+:gray,gutter:-1,fg+:blue:bold,pointer:cyan,info:blue,border:gray";
     };
     syntaxHighlighting = {
       enable = true;
-      highlighters = [
-        "brackets"
-      ];
+      highlighters = [ "brackets" ];
       styles = {
         comment = "fg=white,faint";
         single-quoted-argument = "fg=green";
@@ -99,7 +96,7 @@
         "fzf"
         "golang"
       ];
-      custom = "$HOME/github/dotfiles/ohmyzsh";
+      custom = "${inputs.dotfiles}/ohmyzsh/.oh-my-zsh/custom";
       theme = "pyrsson";
     };
   };

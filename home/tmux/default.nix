@@ -1,7 +1,9 @@
-{pkgs, ...}:
+{ pkgs, inputs, ... }:
 let
-  tmuxattach = pkgs.writeShellScriptBin "ta" (builtins.readFile ./ta);
-in 
+  tmuxattach = pkgs.writeShellScriptBin "ta" (
+    builtins.readFile "${inputs.dotfiles}/scripts/.local/bin/ta"
+  );
+in
 {
   programs.tmux = {
     enable = true;
@@ -9,13 +11,10 @@ in
       tmuxPlugins.prefix-highlight
       tmuxPlugins.tmux-thumbs
     ];
-    extraConfig = 
-      ''
-      ${ builtins.readFile ./tmux.conf }
+    extraConfig = ''
+      ${builtins.readFile ./tmux.conf}
       run-shell ${pkgs.tmuxPlugins.prefix-highlight}/share/tmux-plugins/prefix-highlight/prefix_highlight.tmux
-      '';
+    '';
   };
-  home.packages = [
-    tmuxattach
-  ];
+  home.packages = [ tmuxattach ];
 }

@@ -1,18 +1,18 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 let
   treesitterWithGrammars = pkgs.vimPlugins.nvim-treesitter.withAllGrammars;
 in
 {
   programs.neovim = {
     enable = true;
-    # package = pkgs.unstable.neovim;
+    package = pkgs.unstable.neovim-unwrapped;
     vimAlias = true;
     vimdiffAlias = true;
     viAlias = true;
     defaultEditor = true;
     coc.enable = false;
     withNodeJs = true;
-    extraPackages = with pkgs; [
+    extraPackages = with pkgs.unstable; [
       lua-language-server
       rust-analyzer-unwrapped
       taplo
@@ -24,18 +24,17 @@ in
       docker-compose-language-service
       yaml-language-server
       hadolint
-      nil
       xclip
       wl-clipboard
       deno
       nodePackages.bash-language-server
-      nodePackages.vscode-json-languageserver-bin
+      nodePackages.vscode-langservers-extracted
       shfmt
       shellcheck
+      nixfmt-rfc-style
+      nixd
     ];
-    plugins = [
-      treesitterWithGrammars
-    ];
+    plugins = [ treesitterWithGrammars ];
   };
 
   home.sessionVariables.EDITOR = "nvim";

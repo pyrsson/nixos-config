@@ -1,17 +1,16 @@
 { config, ... }:
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
 
-      ../common
-      ../common/optional/gnome.nix
-    ];
+    ../common
+    ../common/optional/gnome.nix
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.canTouchEfiVariables = false;
   # boot.loader = {
   #   efi = {
   #     canTouchEfiVariables = true;
@@ -23,7 +22,7 @@
   #     useOSProber = true;
   #   };
   # };
-
+  time.hardwareClockInLocalTime = true;
   networking.hostName = "sidearm";
 
   # Enable CUPS to print documents.
@@ -54,17 +53,7 @@
     driSupport32Bit = true;
   };
 
-  services.xserver.videoDrivers = [ "nvidia" ];
-
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = false;
-    powerManagement.finegrained = false;
-    open = false;
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
+  services.xserver.videoDrivers = [ "amdgpu" ];
 
   system.stateVersion = "23.11"; # Did you read the comment?
 }
-
