@@ -29,6 +29,7 @@
   # until toml settings are fixed:
   xdg.configFile."alacritty/alacritty.toml" = {
     text = ''
+      [general]
       import = [
         "~/.local/share/nvim/lazy/tokyonight.nvim/extras/alacritty/tokyonight_moon.toml"
       ]
