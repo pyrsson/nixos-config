@@ -44,7 +44,7 @@
   programs.home-manager.enable = true;
   programs.git = {
     enable = true;
-    userName = "Simon Persson";
+    userName = "pyrsson";
     userEmail = "55557230+pyrsson@users.noreply.github.com";
   };
 

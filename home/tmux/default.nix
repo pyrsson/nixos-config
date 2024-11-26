@@ -1,7 +1,7 @@
 { pkgs, inputs, ... }:
 let
   tmuxattach = pkgs.writeShellScriptBin "ta" (
-    builtins.readFile "${inputs.dotfiles}/scripts/.local/bin/ta"
+    builtins.readFile "${inputs.dotfiles}/scripts/dot-local/bin/ta"
   );
 in
 {
