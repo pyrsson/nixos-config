@@ -13,6 +13,7 @@
 
     ../common
     ../common/optional/sshd.nix
+    ../common/optional/gnome.nix
   ];
 
   networking.hostName = "nix-vm";
@@ -22,4 +23,5 @@
     device = "/dev/vda";
     useOSProber = true;
   };
+  system.stateVersion = "23.11";
 }

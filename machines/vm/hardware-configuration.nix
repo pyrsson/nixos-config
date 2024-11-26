@@ -23,10 +23,10 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/742778df-2bec-432d-a49c-c39203e157c8";
-    fsType = "ext4";
-  };
+  fileSystems."/" =
+    { device = "/dev/disk/by-label/NIXROOT";
+      fsType = "ext4";
+    };
 
   swapDevices = [ ];
 

@@ -110,6 +110,7 @@ in
   environment.systemPackages = with pkgs; [
     tmux
     ripgrep
+    fd
     lazygit
     neovim
     git
