@@ -26,4 +26,5 @@
     slack
     teams-for-linux
   ];
+  home.stateVersion = "23.11";
 }
