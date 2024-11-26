@@ -96,7 +96,7 @@
         "fzf"
         "golang"
       ];
-      custom = "${inputs.dotfiles}/ohmyzsh/.oh-my-zsh/custom";
+      custom = "${inputs.dotfiles}/ohmyzsh/dot-oh-my-zsh/custom";
       theme = "pyrsson";
     };
   };
