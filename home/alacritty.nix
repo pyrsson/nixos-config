@@ -2,6 +2,7 @@
 {
   programs.alacritty = {
     enable = true;
+    package = pkgs.unstable.alacritty;
   };
 
   # until toml settings are fixed:

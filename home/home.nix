@@ -16,9 +16,11 @@ in
 
     # You can also split up your configuration and import pieces of it here:
     ./common.nix
+    ./gtk.nix
     ./alacritty.nix
     ./steam.nix
     ./lutris.nix
+    ./themes.nix
   ];
 
   home.packages = with pkgs; [ vesktop ];

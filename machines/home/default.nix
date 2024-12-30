@@ -6,6 +6,8 @@
 
     ../common
     ../common/optional/gnome.nix
+    ../common/optional/ghostty.nix
+    ../common/optional/umu.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
@@ -32,7 +34,6 @@
   };
 
   # Enable sound with pipewire.
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -47,10 +48,9 @@
     #media-session.enable = true;
   };
 
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
+    enable32Bit = true;
   };
 
   services.xserver.videoDrivers = [ "amdgpu" ];

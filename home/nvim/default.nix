@@ -33,6 +33,8 @@ in
       shellcheck
       nixfmt-rfc-style
       nixd
+      nil
+      chafa
     ];
     plugins = [ treesitterWithGrammars ];
   };

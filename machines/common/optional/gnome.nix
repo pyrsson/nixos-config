@@ -1,10 +1,17 @@
 { pkgs, ... }:
+let
+  tokyonight-gtk-theme = pkgs.unstable.tokyonight-gtk-theme.override {
+    tweakVariants = [ "moon" ];
+  };
+in
 {
   services = {
     xserver = {
       enable = true;
+      dpi = 96;
       displayManager.gdm.enable = true;
       desktopManager.gnome.enable = true;
+      upscaleDefaultCursor = true;
       xkb = {
         variant = "nodeadkeys";
         layout = "se";
@@ -15,13 +22,20 @@
   environment.systemPackages =
     with pkgs;
     [
-      gnome3.gnome-tweaks
-      gnome3.gnome-shell-extensions
+      gnome-tweaks
+      gnome-themes-extra
+      gnome-shell-extensions
+      xsettingsd
+      xorg.xrdb
+      gtk-engine-murrine
+      catppuccin-cursors.frappeDark
+      tokyonight-gtk-theme
     ]
     ++ (with gnomeExtensions; [
       appindicator
       blur-my-shell
       clipboard-indicator
+      user-themes
     ]);
   programs.kdeconnect = {
     enable = true;
@@ -32,12 +46,15 @@
     user.databases = [
       {
         settings = {
+          "org/gnome/shell/extensions/user-theme" = {
+            name = "Tokyonight-Dark-Moon";
+          };
           "org/gnome/desktop/calendar".show-weekdate = true;
           "org/gnome/desktop/interface".color-scheme = "prefer-dark";
           "org/gnome/shell".enabled-extensions = [
-            "blur-my-shell@aunetx"
             "appindicatorsupport@rgcjonas.gmail.com"
             "clipboard-indicator@tudmotu.com"
+            "user-theme@gnome-shell-extensions.gcampax.github.com"
           ];
         };
       }

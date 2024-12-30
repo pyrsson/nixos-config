@@ -3,6 +3,9 @@ let
   tmuxattach = pkgs.writeShellScriptBin "ta" (
     builtins.readFile "${inputs.dotfiles}/scripts/dot-local/bin/ta"
   );
+  tmuxpreview = pkgs.writeShellScriptBin "tpreview" (
+    builtins.readFile "${inputs.dotfiles}/scripts/dot-local/bin/tpreview"
+  );
 in
 {
   programs.tmux = {
@@ -16,5 +19,8 @@ in
       run-shell ${pkgs.tmuxPlugins.prefix-highlight}/share/tmux-plugins/prefix-highlight/prefix_highlight.tmux
     '';
   };
-  home.packages = [ tmuxattach ];
+  home.packages = [
+    tmuxattach
+    tmuxpreview
+  ];
 }

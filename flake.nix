@@ -3,16 +3,28 @@
 
   inputs = {
     # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # Home manager
-    home-manager.url = "github:nix-community/home-manager/release-24.05";
+    home-manager.url = "github:nix-community/home-manager/release-24.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    ghostty.url = "github:ghostty-org/ghostty";
+
+    umu = {
+      url = "github:Open-Wine-Components/umu-launcher?dir=packaging/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Dotfiles
     dotfiles = {
       url = "github:pyrsson/dotfiles";
+      flake = false;
+    };
+
+    tokyonight-nvim = {
+      url = "github:folke/tokyonight.nvim";
       flake = false;
     };
   };
@@ -22,6 +34,7 @@
       self,
       nixpkgs,
       nixpkgs-unstable,
+      ghostty,
       home-manager,
       ...
     }@inputs:
@@ -39,7 +52,12 @@
           inherit system;
           config.allowUnfree = true;
           overlays = [
-            (final: _prev: { unstable = import inputs.nixpkgs-unstable { system = "x86_64-linux"; }; })
+            (final: _prev: {
+              unstable = import inputs.nixpkgs-unstable {
+                config.allowUnfree = true;
+                system = "x86_64-linux";
+              };
+            })
           ];
         }
       );
@@ -57,6 +75,7 @@
         sidearm = lib.nixosSystem {
           specialArgs = {
             inherit inputs outputs;
+            pkgs = pkgsFor.x86_64-linux;
           };
           modules = [ ./machines/home ];
         };

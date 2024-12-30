@@ -1,4 +1,9 @@
-{ pkgs, inputs, ... }:
+{
+  pkgs,
+  inputs,
+  config,
+  ...
+}:
 {
   # You can import other home-manager modules here
   imports = [
@@ -12,6 +17,7 @@
     ./alacritty.nix
     ./nvim
     ./tmux
+    ./themes.nix
   ];
 
   nixpkgs = {
@@ -19,8 +25,6 @@
     config = {
       # Disable if you don't want unfree packages
       allowUnfree = true;
-      # Workaround for https://github.com/nix-community/home-manager/issues/2942
-      allowUnfreePredicate = _: true;
     };
   };
 
@@ -31,7 +35,7 @@
       nerdfonts
       gcc
       jq
-      yq
+      yq-go
       rustup
       oh-my-zsh
       go
@@ -52,7 +56,12 @@
   programs.zsh = {
     enable = true;
     sessionVariables = {
-      FZF_DEFAULT_OPTS = "--color dark,prompt:blue,hl+:cyan,hl:cyan,bg+:gray,gutter:-1,fg+:blue:bold,pointer:cyan,info:blue,border:gray";
+      FZF_DEFAULT_OPTS = "--reverse --tmux 80%,50% --color dark,prompt:blue,hl+:cyan,hl:cyan,bg+:gray,gutter:-1,fg+:blue:bold,pointer:cyan,info:blue,border:gray";
+      FZF_CTRL_R_OPTS = "--reverse --preview 'echo {}' --preview-window down:3:wrap:hidden:border-horizontal --bind '?:toggle-preview'";
+      FZF_CTRL_T_OPTS = "--preview 'test -d {} && eza -la --color=always {} || bat --style=numbers --color=always --line-range=:500 {} 2> /dev/null | head -200'";
+    };
+    shellAliases = {
+      ls = "eza --color=always";
     };
     syntaxHighlighting = {
       enable = true;
@@ -100,8 +109,14 @@
       theme = "pyrsson";
     };
   };
-  programs.fzf.enable = true;
-  programs.bat.enable = true;
+  programs.fzf = {
+    enable = true;
+    package = pkgs.unstable.fzf;
+  };
+  programs = {
+    bat.enable = true;
+    eza.enable = true;
+  };
 
   fonts.fontconfig.enable = true;
 
