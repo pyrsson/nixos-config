@@ -10,8 +10,6 @@
     home-manager.url = "github:nix-community/home-manager/release-24.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    ghostty.url = "github:ghostty-org/ghostty";
-
     umu = {
       url = "github:Open-Wine-Components/umu-launcher?dir=packaging/nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -34,7 +32,6 @@
       self,
       nixpkgs,
       nixpkgs-unstable,
-      ghostty,
       home-manager,
       ...
     }@inputs:
@@ -69,6 +66,7 @@
         nix-vm = lib.nixosSystem {
           specialArgs = {
             inherit inputs outputs;
+            pkgs = pkgsFor.x86_64-linux;
           };
           modules = [ ./machines/vm ];
         };
