@@ -1,4 +1,4 @@
-{ config, ... }:
+{ pkgs, ... }:
 {
   imports = [
     # Include the results of the hardware scan.
@@ -54,6 +54,10 @@
   };
 
   services.xserver.videoDrivers = [ "amdgpu" ];
+
+  environment.systemPackages = with pkgs; [
+    lact # AMD GPU tool
+  ];
 
   system.stateVersion = "23.11"; # Did you read the comment?
 }

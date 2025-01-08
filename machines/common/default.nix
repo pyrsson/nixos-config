@@ -21,6 +21,7 @@ in
 
     # You can also split up your configuration and import pieces of it here:
     # ./users.nix
+    ./optional/podman.nix
   ];
 
   nixpkgs = {
@@ -120,5 +121,8 @@ in
     unzip
     xclip
     wl-clipboard
+    sshfs
+    kicad
+    python3
   ];
 }
