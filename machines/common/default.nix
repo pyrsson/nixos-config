@@ -21,7 +21,7 @@ in
 
     # You can also split up your configuration and import pieces of it here:
     # ./users.nix
-    ./optional/podman.nix
+    ./optional/virtualization.nix
   ];
 
   nixpkgs = {

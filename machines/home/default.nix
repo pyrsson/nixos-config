@@ -6,6 +6,7 @@
 
     ../common
     ../common/optional/gnome.nix
+    ../common/optional/hyprland.nix
     ../common/optional/ghostty.nix
     ../common/optional/umu.nix
   ];
@@ -53,11 +54,22 @@
     enable32Bit = true;
   };
 
+  hardware.graphics.extraPackages = with pkgs; [
+    rocmPackages.clr.icd
+  ];
+  hardware.graphics.extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
+  systemd.tmpfiles.rules = [
+    "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
+  ];
+
   services.xserver.videoDrivers = [ "amdgpu" ];
 
   environment.systemPackages = with pkgs; [
     lact # AMD GPU tool
+    clinfo
   ];
+  systemd.packages = with pkgs; [ lact ];
+  systemd.services.lactd.wantedBy = [ "multi-user.target" ];
 
   system.stateVersion = "23.11"; # Did you read the comment?
 }

@@ -1,10 +1,16 @@
-{ pkgs, inputs, ... }:
+{ pkgs, ... }:
 let
   tokyonight-gtk-theme = pkgs.unstable.tokyonight-gtk-theme.override {
     tweakVariants = [ "moon" ];
   };
 in
 {
+  home.pointerCursor = {
+    gtk.enable = true;
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Ice";
+    size = 24;
+  };
   gtk = {
     enable = true;
     theme = {
@@ -12,8 +18,7 @@ in
       package = tokyonight-gtk-theme;
     };
     cursorTheme = {
-      name = "catppuccin-frappe-dark-cursors";
-      package = pkgs.catppuccin-cursors.frappeDark;
+      name = "Bibata-Modern-Ice";
     };
   };
   dconf.settings = {

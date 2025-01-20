@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, config, ... }:
 let
   treesitterWithGrammars = pkgs.vimPlugins.nvim-treesitter.withAllGrammars;
 in
@@ -42,8 +42,7 @@ in
   home.sessionVariables.EDITOR = "nvim";
 
   xdg.configFile."nvim/" = {
-    source = "${inputs.dotfiles}/lazyvim/dot-config/nvim/";
-    recursive = true;
+    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/github/dotfiles/lazyvim/dot-config/nvim";
   };
 
   home.file."./.local/share/nvim/nix/nvim-treesitter/" = {

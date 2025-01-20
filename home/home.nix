@@ -21,6 +21,7 @@ in
     ./steam.nix
     ./lutris.nix
     ./themes.nix
+    ./hyprland.nix
   ];
 
   home.packages = with pkgs; [ vesktop ];

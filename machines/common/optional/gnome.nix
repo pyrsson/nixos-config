@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   tokyonight-gtk-theme = pkgs.unstable.tokyonight-gtk-theme.override {
     tweakVariants = [ "moon" ];
@@ -25,10 +25,11 @@ in
       gnome-tweaks
       gnome-themes-extra
       gnome-shell-extensions
+      gdm-settings
       xsettingsd
       xorg.xrdb
       gtk-engine-murrine
-      catppuccin-cursors.frappeDark
+      bibata-cursors
       tokyonight-gtk-theme
     ]
     ++ (with gnomeExtensions; [
@@ -42,22 +43,35 @@ in
     package = pkgs.gnomeExtensions.gsconnect;
   };
 
-  programs.dconf.profiles = {
-    user.databases = [
-      {
-        settings = {
-          "org/gnome/shell/extensions/user-theme" = {
-            name = "Tokyonight-Dark-Moon";
+  programs.dconf = {
+    enable = true;
+    profiles = {
+      gdm.databases = [
+        {
+          settings = {
+            "org/gnome/desktop/peripherals/mouse" = {
+              speed = -0.34;
+            };
           };
-          "org/gnome/desktop/calendar".show-weekdate = true;
-          "org/gnome/desktop/interface".color-scheme = "prefer-dark";
-          "org/gnome/shell".enabled-extensions = [
-            "appindicatorsupport@rgcjonas.gmail.com"
-            "clipboard-indicator@tudmotu.com"
-            "user-theme@gnome-shell-extensions.gcampax.github.com"
-          ];
-        };
-      }
-    ];
+        }
+      ];
+      user.databases = [
+        {
+          settings = {
+            "org/gnome/shell/extensions/user-theme" = {
+              name = "Tokyonight-Dark-Moon";
+            };
+            "org/gnome/desktop/calendar".show-weekdate = true;
+            "org/gnome/desktop/interface".color-scheme = "prefer-dark";
+            "org/gnome/shell".disable-user-extensions = false;
+            "org/gnome/shell".enabled-extensions = [
+              "appindicatorsupport@rgcjonas.gmail.com"
+              "clipboard-indicator@tudmotu.com"
+              "user-theme@gnome-shell-extensions.gcampax.github.com"
+            ];
+          };
+        }
+      ];
+    };
   };
 }

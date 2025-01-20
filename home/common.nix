@@ -50,6 +50,10 @@
     enable = true;
     userName = "pyrsson";
     userEmail = "55557230+pyrsson@users.noreply.github.com";
+    extraConfig = {
+      init.defaultBranch = "main";
+      pull.rebase = true;
+    };
   };
 
   programs.bash.enable = true;
@@ -62,6 +66,14 @@
     };
     shellAliases = {
       ls = "eza --color=always";
+      cat = "bat";
+    };
+    history = {
+      append = true;
+      ignoreDups = true;
+      expireDuplicatesFirst = true;
+      save = 10000;
+      size = 10000;
     };
     syntaxHighlighting = {
       enable = true;
@@ -78,10 +90,37 @@
         path = "fg=blue";
       };
     };
+    defaultKeymap = "emacs";
+    autocd = true;
     initExtraFirst = ''
       DISABLE_MAGIC_FUNCTIONS=true
     '';
     initExtra = ''
+      bindkey "''${terminfo[kpp]}" up-line-or-history
+      bindkey "''${terminfo[knp]}" down-line-or-history
+
+      autoload -U up-line-or-beginning-search
+      zle -N up-line-or-beginning-search
+      bindkey "^[[A" up-line-or-beginning-search
+
+      autoload -U down-line-or-beginning-search
+      zle -N down-line-or-beginning-search
+      bindkey "^[[B" down-line-or-beginning-search
+
+      bindkey '^?' backward-delete-char
+      bindkey "^[[3~" delete-char
+      bindkey "^[3;5~" delete-char
+
+      bindkey '^[[3;5~' kill-word
+      bindkey '^[[1;5C' forward-word
+      bindkey '^[[1;5D' backward-word
+
+      bindkey ' ' magic-space                               # [Space] - don't do history expansion
+      # Edit the current command line in $EDITOR
+      autoload -U edit-command-line
+      zle -N edit-command-line
+      bindkey '\C-x\C-e' edit-command-line
+
       # bash word-style
       autoload -Uz backward-kill-word-match
 
@@ -92,22 +131,33 @@
       bindkey '^[^H' backward-kill-bash-word
       zle -N backward-kill-bash-word backward-kill-word-match
       zstyle :zle:backward-kill-bash-word word-style bash
+
+      zstyle ':completion:*' matcher-list 'm:{A-Za-z}={A-Za-z}'
+
+      autoload -U colors
+      colors
+
+      setopt PROMPT_SUBST
+      PROMPT='%F{blue}%~%f %(?.%F{cyan}.%F{red})%(!.#.>)%f '
+      RPS1="%(?..%{$fg[red]%}%? ↵%{$reset_color%})"
+
+      source <(fzf --zsh)
     '';
     cdpath = [
       "~"
       "~/github"
       "~/work"
     ];
-    oh-my-zsh = {
-      enable = true;
-      plugins = [
-        "git"
-        "fzf"
-        "golang"
-      ];
-      custom = "${inputs.dotfiles}/ohmyzsh/dot-oh-my-zsh/custom";
-      theme = "pyrsson";
-    };
+    # oh-my-zsh = {
+    #   enable = true;
+    #   plugins = [
+    #     "git"
+    #     "fzf"
+    #     "golang"
+    #   ];
+    #   custom = "${inputs.dotfiles}/ohmyzsh/dot-oh-my-zsh/custom";
+    #   theme = "pyrsson";
+    # };
   };
   programs.fzf = {
     enable = true;
