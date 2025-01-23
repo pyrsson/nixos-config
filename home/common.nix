@@ -68,6 +68,12 @@
       ls = "eza --color=always";
       cat = "bat";
     };
+    zplug = {
+      enable = true;
+      plugins = [
+        { name = "davidde/git"; }
+      ];
+    };
     history = {
       append = true;
       ignoreDups = true;
@@ -92,9 +98,6 @@
     };
     defaultKeymap = "emacs";
     autocd = true;
-    initExtraFirst = ''
-      DISABLE_MAGIC_FUNCTIONS=true
-    '';
     initExtra = ''
       bindkey "''${terminfo[kpp]}" up-line-or-history
       bindkey "''${terminfo[knp]}" down-line-or-history
@@ -115,7 +118,7 @@
       bindkey '^[[1;5C' forward-word
       bindkey '^[[1;5D' backward-word
 
-      bindkey ' ' magic-space                               # [Space] - don't do history expansion
+      bindkey ' ' magic-space
       # Edit the current command line in $EDITOR
       autoload -U edit-command-line
       zle -N edit-command-line
@@ -148,16 +151,6 @@
       "~/github"
       "~/work"
     ];
-    # oh-my-zsh = {
-    #   enable = true;
-    #   plugins = [
-    #     "git"
-    #     "fzf"
-    #     "golang"
-    #   ];
-    #   custom = "${inputs.dotfiles}/ohmyzsh/dot-oh-my-zsh/custom";
-    #   theme = "pyrsson";
-    # };
   };
   programs.fzf = {
     enable = true;

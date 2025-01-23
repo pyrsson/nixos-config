@@ -5,6 +5,9 @@
   services.hypridle.enable = true;
   programs.hyprlock.enable = true;
   programs.uwsm.enable = true;
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.gdm.enableGnomeKeyring = true;
+
   environment.systemPackages = with pkgs; [
     waybar
     # dunst

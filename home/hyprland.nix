@@ -5,8 +5,7 @@
   programs.waybar.enable = true;
   programs.waybar.systemd.enable = true;
   services.hyprpaper.enable = true;
-  # services.swaync.enable = true;
-  # services.swaync.settings = null;
+  systemd.user.sessionVariables.SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/keyring/ssh";
 
   xdg.configFile."hypr".source =
     config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/github/dotfiles/hypr/dot-config/hypr";
