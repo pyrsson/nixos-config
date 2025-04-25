@@ -1,4 +1,9 @@
-{ pkgs, inputs, ... }:
+{
+  pkgs,
+  inputs,
+  config,
+  ...
+}:
 {
   programs.alacritty = {
     enable = true;
@@ -6,7 +11,6 @@
   };
 
   # until toml settings are fixed:
-  xdg.configFile."alacritty/alacritty.toml" = {
-    source = "${inputs.dotfiles}/alacritty/.alacritty.toml";
-  };
+  xdg.configFile."alacritty/alacritty.toml".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/github/dotfiles/alacritty/.alacritty.toml";
 }

@@ -25,13 +25,17 @@
       url = "github:folke/tokyonight.nvim";
       flake = false;
     };
+
+    anyrun = {
+      url = "github:anyrun-org/anyrun";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs =
     {
       self,
       nixpkgs,
-      nixpkgs-unstable,
       home-manager,
       ...
     }@inputs:
@@ -49,10 +53,10 @@
           inherit system;
           config.allowUnfree = true;
           overlays = [
-            (final: _prev: {
+            (final: prev: {
               unstable = import inputs.nixpkgs-unstable {
                 config.allowUnfree = true;
-                system = "x86_64-linux";
+                system = prev.system;
               };
             })
           ];
